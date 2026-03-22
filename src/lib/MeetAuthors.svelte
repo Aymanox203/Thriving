@@ -1,14 +1,14 @@
 <script>
-  import photo1 from "../assets/generic1.jpg";
+  import photo1 from "../assets/moses2.jpg";
   import photo2 from "../assets/generic2.jpg";
   import photo3 from "../assets/generic3.jpg";
 
   const authors = [
     {
-      name: "John Doe",
+      name: "Moses C. Okonkwo",
       photo: photo1,
       description:
-        "Professor of Applied Sciences with over two decades of research in computational theory and systems design.",
+        "Doctoral Researcher at Zhejiang University with interests in Pschology, Technopreneurship, and Computer Vision. Spends most of his spare time on reading, sports, and meeting with different minds. ",
     },
     {
       name: "Van Dam",
@@ -33,7 +33,7 @@
   </h2>
 
   {#each authors as author}
-    <div class="h-[110px] rounded-md overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.08)] relative flex flex-row">
+    <div class="min-h-[110px] rounded-md overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.08)] relative flex flex-row">
       <!-- Left section — secondary color -->
       <div class="w-[80px] shrink-0 bg-secondary"></div>
 
@@ -50,7 +50,7 @@
       <!-- Profile photo — centered on the vertical border between sections -->
       <div class="absolute left-[80px] top-1/2 -translate-x-1/2 -translate-y-1/2">
         <div
-          class="w-[60px] h-[60px] rounded-full overflow-hidden border-[3px] border-anti shadow-md"
+          class="w-[80px] h-[80px] rounded-full overflow-hidden border-[3px] border-anti shadow-md"
         >
           <img
             src={author.photo}

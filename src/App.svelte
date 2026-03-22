@@ -22,7 +22,7 @@
     <section class="w-full max-w-6xl mx-auto px-6 py-4 flex flex-col lg:flex-row lg:items-center lg:gap-12">
 
       <!-- Left: Author cards -->
-      <div class="lg:w-[380px] shrink-0">
+      <div class="lg:w-[450px] shrink-0">
         <MeetAuthors />
       </div>
 
