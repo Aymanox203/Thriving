@@ -69,7 +69,7 @@ export const themes = [
 ];
 
 // ── Current theme id ──
-export const currentThemeId = writable("light");
+export const currentThemeId = writable("navy-gold");
 
 // ── Derived: full theme object ──
 export const currentTheme = derived(currentThemeId, ($id) => {
