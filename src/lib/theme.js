@@ -49,7 +49,7 @@ export const themes = [
   {
     id: "navy-gold",
     label: "Navy & Gold",
-    bg: "#A9A9A9",
+    bg: "#dfdede",
     text: "#1B2A4A",
     rose: "#C8A84E",
     plum: "#1B2A4A",

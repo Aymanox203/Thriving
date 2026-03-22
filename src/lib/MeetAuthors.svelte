@@ -25,42 +25,40 @@
   ];
 </script>
 
-<section class="w-full max-w-4xl mx-auto px-6 py-16">
+<div class="flex flex-col gap-5 w-full">
   <h2
-    class="font-display text-xs tracking-[0.3em] uppercase text-charcoal text-center mb-14"
+    class="font-display text-sm tracking-[0.3em] uppercase text-charcoal text-center lg:text-left mb-2"
   >
     Meet the Authors
   </h2>
 
-  <div class="flex flex-wrap justify-center gap-16">
-    {#each authors as author}
-      <div class="w-[220px] h-[256px] rounded-md overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.08)] relative flex flex-col">
-        <!-- Top section — secondary color (80px) -->
-        <div class="h-[80px] shrink-0 bg-secondary"></div>
+  {#each authors as author}
+    <div class="h-[110px] rounded-md overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.08)] relative flex flex-row">
+      <!-- Left section — secondary color -->
+      <div class="w-[80px] shrink-0 bg-secondary"></div>
 
-        <!-- Bottom section — anti-primary color -->
-        <div class="flex-1 bg-anti flex flex-col items-center justify-end pb-5 px-4 pt-[44px]">
-          <h3 class="font-display text-sm font-bold tracking-wide text-charcoal text-center">
-            {author.name}
-          </h3>
-          <p class="font-body text-[11px] leading-relaxed text-charcoal/60 text-center mt-1.5">
-            {author.description}
-          </p>
-        </div>
+      <!-- Right section — anti-primary color -->
+      <div class="flex-1 bg-anti flex flex-col justify-center pl-[48px] pr-4">
+        <h3 class="font-display text-base font-bold tracking-wide text-charcoal">
+          {author.name}
+        </h3>
+        <p class="font-body text-[13px] leading-relaxed text-charcoal/60 mt-1">
+          {author.description}
+        </p>
+      </div>
 
-        <!-- Profile photo — centered on the border between sections -->
-        <div class="absolute top-[80px] left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div
-            class="w-[72px] h-[72px] rounded-full overflow-hidden border-[3px] border-anti shadow-md"
-          >
-            <img
-              src={author.photo}
-              alt={author.name}
-              class="w-full h-full object-cover"
-            />
-          </div>
+      <!-- Profile photo — centered on the vertical border between sections -->
+      <div class="absolute left-[80px] top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div
+          class="w-[60px] h-[60px] rounded-full overflow-hidden border-[3px] border-anti shadow-md"
+        >
+          <img
+            src={author.photo}
+            alt={author.name}
+            class="w-full h-full object-cover"
+          />
         </div>
       </div>
-    {/each}
-  </div>
-</section>
+    </div>
+  {/each}
+</div>
