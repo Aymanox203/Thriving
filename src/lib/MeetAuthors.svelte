@@ -5,10 +5,10 @@
 
   const authors = [
     {
-      name: "Moses C. Okonkwo",
+      name: "John Doe",
       photo: photo1,
       description:
-        "Doctoral Researcher at Zhejiang University with interests in Pschology, Technopreneurship, and Computer Vision. Spends most of his spare time on reading, sports, and meeting with different minds. ",
+        "Doctoral Researcher at Zhejiang University with interests in Psychology, Technopreneurship, and Computer Vision. Spends most of his spare time on reading, sports, and meetings with different minds",
     },
     {
       name: "Van Dam",
@@ -25,32 +25,32 @@
   ];
 </script>
 
-<div class="flex flex-col gap-5 w-full">
+<div class="flex flex-col gap-6 lg:gap-8 w-full">
   <h2
-    class="font-display text-sm tracking-[0.3em] uppercase text-charcoal text-center lg:text-left mb-2"
+    class="font-display text-sm lg:text-base tracking-[0.3em] uppercase text-charcoal text-center lg:text-left mb-2"
   >
     Meet the Authors
   </h2>
 
   {#each authors as author}
-    <div class="min-h-[110px] rounded-md overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.08)] relative flex flex-row">
+    <div class="min-h-[120px] lg:min-h-[140px] rounded-md overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.08)] relative flex flex-row">
       <!-- Left section — secondary color -->
-      <div class="w-[80px] shrink-0 bg-secondary"></div>
+      <div class="w-[80px] lg:w-[100px] shrink-0 bg-secondary"></div>
 
       <!-- Right section — anti-primary color -->
-      <div class="flex-1 bg-anti flex flex-col justify-center pl-[48px] pr-4">
-        <h3 class="font-display text-base font-bold tracking-wide text-charcoal">
+      <div class="flex-1 bg-anti flex flex-col justify-center pl-[48px] lg:pl-[60px] pr-4 lg:pr-6 py-4">
+        <h3 class="font-display text-base lg:text-lg font-bold tracking-wide text-charcoal">
           {author.name}
         </h3>
-        <p class="font-body text-[13px] leading-relaxed text-charcoal/60 mt-1">
+        <p class="font-body text-[13px] lg:text-[15px] leading-relaxed text-charcoal/60 mt-1 lg:mt-2">
           {author.description}
         </p>
       </div>
 
       <!-- Profile photo — centered on the vertical border between sections -->
-      <div class="absolute left-[80px] top-1/2 -translate-x-1/2 -translate-y-1/2">
+      <div class="absolute left-[80px] lg:left-[100px] top-1/2 -translate-x-1/2 -translate-y-1/2">
         <div
-          class="w-[80px] h-[80px] rounded-full overflow-hidden border-[3px] border-anti shadow-md"
+          class="w-[80px] h-[80px] lg:w-[96px] lg:h-[96px] rounded-full overflow-hidden border-[3px] border-anti shadow-md"
         >
           <img
             src={author.photo}

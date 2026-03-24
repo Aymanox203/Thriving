@@ -1,61 +1,77 @@
 <script>
   import { BOOK_TITLE } from "../lib/config.js";
 
-  let open = $state(false);
-  let name = "";
-  let email = "";
-  let phone = "";
-  let comment = "";
+  // ── Shared state ──
+  let modalType = $state(null); // "preorder" | "contribute" | null
+  let name = $state("");
+  let email = $state("");
+  let phone = $state("");
+  let content = $state("");
   let submitted = $state(false);
+
+  function openPreorder() { modalType = "preorder"; }
+  function openContribute() { modalType = "contribute"; }
+
+  function close() {
+    modalType = null;
+  }
+
+  function resetForm() {
+    name = "";
+    email = "";
+    phone = "";
+    content = "";
+  }
 
   function handleSubmit() {
     submitted = true;
     setTimeout(() => {
       submitted = false;
-      open = false;
-      name = "";
-      email = "";
-      phone = "";
-      comment = "";
+      close();
+      resetForm();
     }, 2500);
-  }
-
-  function close() {
-    open = false;
   }
 
   function onBackdropClick(e) {
     if (e.target === e.currentTarget) close();
   }
 
-  function onKeydown(e) {
-    if (e.key === "Escape") close();
-  }
+  let isPreorder = $derived(modalType === "preorder");
+  let isContribute = $derived(modalType === "contribute");
+  let isOpen = $derived(modalType !== null);
 </script>
 
-<svelte:window on:keydown={onKeydown} />
+<svelte:window onkeydown={(e) => { if (e.key === "Escape") close(); }} />
 
-<!-- CTA Button -->
-<section class="w-full flex justify-center py-12">
+<!-- CTA Section -->
+<section class="w-full flex flex-col items-center py-12 lg:py-16">
   <button
-    onclick={() => (open = true)}
-    class="font-display text-[15px] tracking-[0.2em] uppercase
-           px-12 py-4 bg-plum text-cream rounded-sm
+    onclick={openPreorder}
+    class="font-display text-[15px] lg:text-[17px] tracking-[0.2em] uppercase
+           px-12 lg:px-16 py-4 lg:py-5 bg-plum text-cream rounded-sm
            transition-all duration-300
            hover:bg-rose hover:shadow-[0_4px_20px_rgba(133,57,83,0.3)]
            active:scale-[0.97]"
   >
     Pre-Order Now
   </button>
+  <button
+    onclick={openContribute}
+    class="font-body text-sm lg:text-base text-charcoal/50 mt-4 italic
+           underline underline-offset-4 decoration-charcoal/20
+           hover:text-charcoal/70 hover:decoration-charcoal/40
+           transition-colors duration-300 cursor-pointer bg-transparent border-none"
+  >
+    Apply to contribute
+  </button>
 </section>
 
 <!-- Modal overlay -->
-{#if open}
-  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+{#if isOpen}
   <div
-  tabindex="-1"
     role="dialog"
     aria-modal="true"
+    tabindex="-1"
     class="fixed inset-0 z-50 flex items-center justify-center p-4
            bg-black/40 backdrop-blur-sm
            animate-[fadeIn_0.2s_ease-out]"
@@ -64,7 +80,8 @@
     <div
       class="bg-cream w-full max-w-lg rounded-lg shadow-[0_24px_80px_rgba(0,0,0,0.2)]
              p-8 md:p-10 relative
-             animate-[slideUp_0.25s_ease-out]"
+             animate-[slideUp_0.25s_ease-out]
+             max-h-[90vh] overflow-y-auto"
     >
       <!-- Close button -->
       <button
@@ -79,21 +96,45 @@
         </svg>
       </button>
 
-      <h2 class="font-display text-sm tracking-[0.3em] uppercase text-charcoal text-center mb-8">
-        Pre-Order {BOOK_TITLE}
+      <!-- Header — changes based on modal type -->
+      <h2 class="font-display text-base lg:text-lg tracking-[0.25em] uppercase text-charcoal text-center mb-2">
+        {#if isPreorder}
+          Pre-Order {BOOK_TITLE}
+        {:else}
+          Apply to Contribute
+        {/if}
       </h2>
+      <p class="font-body text-sm text-charcoal/50 text-center mb-8">
+        {#if isPreorder}
+          Fill in your information and what you'd like to contribute
+        {:else}
+          Tell us about yourself and how you'd like to contribute to {BOOK_TITLE}
+        {/if}
+      </p>
 
       {#if submitted}
         <div class="text-center py-10">
-          <p class="font-body text-charcoal text-lg">Thank you!</p>
-          <p class="font-body text-charcoal/50 text-base mt-1">Your pre-order has been placed.</p>
+          <p class="font-body text-charcoal text-xl">Thank you!</p>
+          <p class="font-body text-charcoal/50 text-base mt-2">
+            {#if isPreorder}
+              Your pre-order has been placed.
+            {:else}
+              Your application has been submitted.
+            {/if}
+          </p>
         </div>
       {:else}
         <form onsubmit={(e) => { e.preventDefault(); handleSubmit(); }} class="space-y-5">
+
+          <!-- Info section -->
+          <p class="font-display text-[11px] tracking-[0.2em] uppercase text-charcoal/40 mb-1">
+            Your Information
+          </p>
+
           <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div class="flex flex-col gap-2">
               <label for="modal-name" class="font-display text-[13px] tracking-[0.18em] uppercase text-charcoal/60">
-                Name
+                Name <span class="text-rose">*</span>
               </label>
               <input
                 id="modal-name"
@@ -110,7 +151,7 @@
 
             <div class="flex flex-col gap-2">
               <label for="modal-email" class="font-display text-[13px] tracking-[0.18em] uppercase text-charcoal/60">
-                Email
+                Email <span class="text-rose">*</span>
               </label>
               <input
                 id="modal-email"
@@ -128,12 +169,13 @@
 
           <div class="flex flex-col gap-2">
             <label for="modal-phone" class="font-display text-[13px] tracking-[0.18em] uppercase text-charcoal/60">
-              Phone
+              Phone <span class="text-rose">*</span>
             </label>
             <input
               id="modal-phone"
               type="tel"
               bind:value={phone}
+              required
               class="w-full bg-transparent border-b border-charcoal/20 pb-2 font-body text-base text-charcoal outline-none
                      transition-colors duration-300
                      focus:border-rose
@@ -142,38 +184,53 @@
             />
           </div>
 
-          <div class="flex flex-col gap-2">
-            <label for="modal-comment" class="font-display text-[13px] tracking-[0.18em] uppercase text-charcoal/60">
-              Comment
-            </label>
-            <textarea
-              id="modal-comment"
-              bind:value={comment}
-              required
-              rows="3"
-              class="w-full bg-transparent border-b border-charcoal/20 pb-2 font-body text-base text-charcoal outline-none resize-none
-                     transition-colors duration-300
-                     focus:border-rose
-                     placeholder:text-charcoal/20"
-              placeholder="Why would you read this book?"
-            ></textarea>
-          </div>
+          <!-- Content section — only for contribute modal -->
+          {#if isContribute}
+            <div class="pt-2">
+              <p class="font-display text-[11px] tracking-[0.2em] uppercase text-charcoal/40 mb-3">
+                Your Contribution
+              </p>
+            </div>
 
-          <!-- Submit row: button + price -->
+            <div class="flex flex-col gap-2">
+              <label for="modal-content" class="font-display text-[13px] tracking-[0.18em] uppercase text-charcoal/60">
+                How would you like to contribute? <span class="text-rose">*</span>
+              </label>
+              <textarea
+                id="modal-content"
+                bind:value={content}
+                required
+                rows="4"
+                class="w-full bg-transparent border-b border-charcoal/20 pb-2 font-body text-base text-charcoal outline-none resize-none
+                       transition-colors duration-300
+                       focus:border-rose
+                       placeholder:text-charcoal/20"
+                placeholder="Tell us how you want to contribute — writing, research, design, expertise..."
+              ></textarea>
+            </div>
+          {/if}
+
+          <!-- Submit row -->
           <div class="pt-4 flex items-center justify-center gap-6">
             <button
               type="submit"
-              class="font-display text-[13px] tracking-[0.2em] uppercase
-                     px-10 py-3 bg-plum text-cream rounded-sm
+              class="font-display text-[14px] tracking-[0.2em] uppercase
+                     px-10 py-3.5 bg-plum text-cream rounded-sm
                      transition-all duration-300
                      hover:bg-rose
                      active:scale-[0.97]"
             >
-              Pre-Order
+              {#if isPreorder}
+                Pre-Order
+              {:else}
+                Submit Application
+              {/if}
             </button>
-            <span class="font-display text-lg text-charcoal/70">
-              $0.00
-            </span>
+            {#if isPreorder}
+              <span class="font-display text-xl text-charcoal/70">
+                ¥1.00 CNY
+              </span>
+            {/if}
           </div>
         </form>
       {/if}

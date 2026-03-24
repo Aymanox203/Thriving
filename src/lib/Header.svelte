@@ -1,10 +1,15 @@
 <script>
-  import { BOOK_TITLE } from "../lib/config.js";
+  import { BOOK_TITLE, BOOK_SUBTITLE_1, BOOK_SUBTITLE_2, BOOK_SUBTITLE_3 } from "../lib/config.js";
 </script>
 
-<header class="pt-8 pb-6 px-8">
-  <h1 class="text-center font-display text-lg tracking-[0.35em] uppercase text-charcoal">
-    {BOOK_TITLE}
-  </h1>
-  <div class="mx-auto mt-6 max-w-[calc(100%-8rem)] h-px bg-charcoal/15"></div>
+<header class="pt-10 pb-8 px-8">
+  <div class="text-center">
+    <h1 class="font-display text-3xl lg:text-5xl font-bold tracking-[0.15em] uppercase text-charcoal">
+      {BOOK_TITLE}
+    </h1>
+    <p class="font-display text-sm lg:text-base tracking-[0.2em] uppercase text-charcoal/70 mt-2">
+      {BOOK_SUBTITLE_1}
+    </p>
+  </div>
+  <div class="mx-auto mt-8 max-w-[calc(100%-8rem)] h-px bg-charcoal/15"></div>
 </header>

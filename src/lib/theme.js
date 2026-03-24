@@ -1,55 +1,11 @@
 import { writable, derived } from "svelte/store";
 
 // ── Theme definitions ──
-// Add new themes here. Each needs a unique id, label, and full color set.
 export const themes = [
   {
     id: "light",
     label: "Light",
-    // CSS / Tailwind colors
-    bg: "#F3F4F4",
-    text: "#2C2C2C",
-    rose: "#853953",
-    plum: "#612D53",
-    accent: "#853953",
-    muted: "rgba(44, 44, 44, 0.15)",
-    mutedText: "rgba(44, 44, 44, 0.35)",
-    // 3D book colors
-    coverColor: "#853953",
-    spineColor: "#6E2F48",
-    pageColor: "#FFFEF5",
-    pageEdgeColor: "#FFEF5F",
-    coverTextColor: "#FFFFFF",
-    coverTextMuted: "rgba(255,255,255,0.5)",
-    coverBorder: "rgba(255,255,255,0.12)",
-    // Card colors
-    secondary: "#853953",
-    antiPrimary: "#FFFFFF",
-  },
-  {
-    id: "dark",
-    label: "Dark",
-    bg: "#1A1A1A",
-    text: "#E8E8E8",
-    rose: "#c73e6d",
-    plum: "#ad5094",
-    accent: "#c73e6d",
-    muted: "rgba(232, 232, 232, 0.12)",
-    mutedText: "rgba(232, 232, 232, 0.35)",
-    coverColor: "#c73e6d",
-    spineColor: "#a33358",
-    pageColor: "#FFFEF5",
-    pageEdgeColor: "#FFEF5F",
-    coverTextColor: "#FFFFFF",
-    coverTextMuted: "rgba(255,255,255,0.5)",
-    coverBorder: "rgba(255,255,255,0.15)",
-    secondary: "#c73e6d",
-    antiPrimary: "#2A2A2A",
-  },
-  {
-    id: "navy-gold",
-    label: "Navy & Gold",
-    bg: "#dfdede",
+    bg: "#A9A9A9",
     text: "#1B2A4A",
     rose: "#C8A84E",
     plum: "#1B2A4A",
@@ -65,11 +21,46 @@ export const themes = [
     coverBorder: "rgba(200, 168, 78, 0.20)",
     secondary: "#1B2A4A",
     antiPrimary: "#FFFFFF",
+    bookHaloBg: "transparent",
+  },
+  {
+    id: "dark",
+    label: "Dark",
+    bg: "#15133C",
+    text: "#F1EEE9",
+    rose: "#73777B",
+    plum: "#EC994B",
+    accent: "#73777B",
+    muted: "rgba(241, 238, 233, 0.12)",
+    mutedText: "rgba(241, 238, 233, 0.35)",
+    coverColor: "#EC994B",
+    spineColor: "#15133C",
+    pageColor: "#FFFEF5",
+    pageEdgeColor: "#73777B",
+    coverTextColor: "#F1EEE9",
+    coverTextMuted: "rgba(241, 238, 233, 0.50)",
+    coverBorder: "rgba(115, 119, 123, 0.20)",
+    secondary: "#EC994B",
+    antiPrimary: "#1E1B4B",
+    bookHaloBg: "radial-gradient(ellipse at center, rgba(236,153,75,0.35) 0%, rgba(115,119,123,0.2) 30%, transparent 60%)",
   },
 ];
 
-// ── Current theme id ──
-export const currentThemeId = writable("navy-gold");
+// ── Detect system preference ──
+function getSystemTheme() {
+  if (typeof window === "undefined") return "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+// ── Current theme id — initialized from system ──
+export const currentThemeId = writable(getSystemTheme());
+
+// ── Listen for system theme changes ──
+if (typeof window !== "undefined") {
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+    currentThemeId.set(e.matches ? "dark" : "light");
+  });
+}
 
 // ── Derived: full theme object ──
 export const currentTheme = derived(currentThemeId, ($id) => {
@@ -86,6 +77,7 @@ if (typeof window !== "undefined") {
     root.style.setProperty("--color-plum", theme.plum);
     root.style.setProperty("--color-secondary", theme.secondary);
     root.style.setProperty("--color-anti", theme.antiPrimary);
+    root.style.setProperty("--book-halo-bg", theme.bookHaloBg);
 
     // Smooth transition on theme change
     root.style.setProperty("transition", "background-color 0.4s ease, color 0.4s ease");
