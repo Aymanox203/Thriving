@@ -342,7 +342,7 @@
   });
 </script>
 
-<section class="flex flex-col items-center justify-center py-16 md:py-10">
+<section class="flex flex-col items-center justify-center py-16 md:py-24">
   <div class="w-[360px] h-[470px] md:w-[450px] md:h-[560px]">
     <Canvas>
       <!-- Camera -->
@@ -420,7 +420,7 @@
       </T.Group>
     </Canvas>
   </div>
-  <p class="mt-4 font-body text-sm text-charcoal/40 italic">
+  <p class="mt-4 font-body text-sm text-text/40 italic">
     Drag to rotate · {BOOK_TITLE}
   </p>
 </section>
