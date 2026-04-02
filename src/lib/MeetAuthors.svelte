@@ -11,26 +11,15 @@
       description:
         "Doctoral Researcher at Zhejiang University with interests in Psychology, Technopreneurship, and Computer Vision. Spends most of his spare time on reading, sports, and meetings with different minds",
     },
-    {
-      name: "Van Dam",
-      photo: photo2,
-      description:
-        "Award-winning researcher specializing in human-computer interaction and pioneering work in interactive graphics.",
-    },
-    {
-      name: "Sam Alt",
-      photo: photo3,
-      description:
-        "Interdisciplinary scholar bridging the gap between technology and the humanities with a focus on ethical AI.",
-    },
   ];
+  let author_word = (authors.length > 1) ? "Authors":"Author";
 </script>
 
 <div class="flex flex-col gap-6 lg:gap-8 w-full">
   <h2
     class="font-display text-sm lg:text-base tracking-[0.3em] uppercase text-text text-center lg:text-left mb-2"
   >
-    Meet the Authors
+    Meet the {author_word}
   </h2>
 
   {#each authors as author}
