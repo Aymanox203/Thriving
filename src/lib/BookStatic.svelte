@@ -30,7 +30,7 @@
   </div>
 
 <div class="mt-8 px-16 lg:px-20 py-3 lg:py-4 rounded-[40%]
-            bg-[radial-gradient(ellipse_at_center,_var(--color-secondary)_0%,_var(--color-secondary)_20%,_transparent_70%)]">
+            bg-[radial-gradient(ellipse_at_center,_var(--color-primary)_0%,_var(--color-primary)_20%,_transparent_70%)]">
     <p class="font-body text-2xl lg:text-3xl text-bg italic text-center">
       {BOOK_TITLE}
     </p>

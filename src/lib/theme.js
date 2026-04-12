@@ -29,7 +29,7 @@ export const themes = [
   {
     id: "dark",
     label: "Dark",
-    bg: "#1A1A1A",
+    bg: "#242424",
     text: "#E8E8E8",
     primary: "#cccccc",
     secondary: "#e61b0e",

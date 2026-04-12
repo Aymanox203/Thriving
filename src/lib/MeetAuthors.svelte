@@ -1,16 +1,20 @@
 <script>
   import photo1 from "../assets/moses2.jpg";
-  import photo2 from "../assets/generic2.jpg";
-  import photo3 from "../assets/generic3.jpg";
+  import photo2 from "../assets/arafath2.jpg";
 
   const authors = [
     
 {
-      name: "John Doe",
+      name: "Moses C. Okonkwo",
       photo: photo1,
       description:
         "Doctoral Researcher at Zhejiang University with interests in Psychology, Technopreneurship, and Computer Vision. Spends most of his spare time on reading, sports, and meetings with different minds",
     },
+    {
+      name:"M.N.M Arafath",
+      photo:photo2,
+      description:"A medical student at Zhejiang University with deep passions for the intersection of medicine, psychology, and philosophy. Particularly excited about works focusing not only on how the human body functions, but how lifestyle, mindset, and daily habits shape mental wellbeing and overall quality of life. Spends most of his time on outdoor activities, reading, articulating  and learning"
+    }
   ];
   let author_word = (authors.length > 1) ? "Authors":"Author";
 </script>
